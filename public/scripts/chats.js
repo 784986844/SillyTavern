@@ -43,6 +43,7 @@ import {
     extractTextFromOffice,
     download,
     getFileText,
+    getExtensionByMimeType,
 } from './utils.js';
 import { extension_settings, renderExtensionTemplateAsync, saveMetadataDebounced } from './extensions.js';
 import { POPUP_RESULT, POPUP_TYPE, Popup, callGenericPopup } from './popup.js';
@@ -206,15 +207,14 @@ export async function populateFileAttachment(message, inputId = 'file_form_input
         let base64Data = fileBase64.split(',')[1];
 
         // If file is image
+        const extension = getExtensionByMimeType(file.type);
         if (file.type.startsWith('image/')) {
-            const extension = file.type.split('/')[1];
             const imageUrl = await saveBase64AsFile(base64Data, name2, fileNamePrefix, extension);
             message.extra.image = imageUrl;
             message.extra.inline_image = true;
         }
         // If file is video
         else if (file.type.startsWith('video/')) {
-            const extension = file.type.split('/')[1];
             const videoUrl = await saveBase64AsFile(base64Data, name2, fileNamePrefix, extension);
             message.extra.video = videoUrl;
         } else {

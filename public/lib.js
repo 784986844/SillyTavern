@@ -22,6 +22,7 @@ import morphdom from 'morphdom';
 import { toggle as slideToggle } from 'slidetoggle';
 import chalk from 'chalk';
 import yaml from 'yaml';
+import mimedb from 'mime-db';
 
 /**
  * Expose the libraries to the 'window' object.
@@ -100,6 +101,7 @@ export default {
     slideToggle,
     chalk,
     yaml,
+    mimedb,
 };
 
 export {
@@ -124,4 +126,5 @@ export {
     slideToggle,
     chalk,
     yaml,
+    mimedb,
 };

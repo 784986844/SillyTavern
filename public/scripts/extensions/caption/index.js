@@ -1,4 +1,4 @@
-import { ensureImageFormatSupported, getBase64Async, isTrueBoolean, saveBase64AsFile } from '../../utils.js';
+import { ensureImageFormatSupported, getBase64Async, getExtensionByMimeType, isTrueBoolean, saveBase64AsFile } from '../../utils.js';
 import { getContext, getApiUrl, doExtrasFetch, extension_settings, modules, renderExtensionTemplateAsync } from '../../extensions.js';
 import { appendMediaToMessage, eventSource, event_types, getRequestHeaders, saveChatConditional, saveSettingsDebounced, substituteParamsExtended } from '../../../script.js';
 import { getMessageTimeStamp } from '../../RossAscends-mods.js';
@@ -327,7 +327,7 @@ async function getCaptionForFile(file, prompt, quiet) {
         setSpinnerIcon();
         const context = getContext();
         const fileData = await getBase64Async(await ensureImageFormatSupported(file));
-        const base64Format = fileData.split(',')[0].split(';')[0].split('/')[1];
+        const base64Format = getExtensionByMimeType(file.type);
         const base64Data = fileData.split(',')[1];
         const { caption } = await doCaptionRequest(base64Data, fileData, prompt);
         if (!quiet) {

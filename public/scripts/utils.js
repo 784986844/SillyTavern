@@ -3,6 +3,7 @@ import {
     DOMPurify,
     Readability,
     isProbablyReaderable,
+    mimedb,
 } from '../lib.js';
 
 import { getContext } from './extensions.js';
@@ -2447,4 +2448,13 @@ export function clearInfoBlock(target) {
         infoBlock.className = '';
         infoBlock.innerHTML = '';
     }
+}
+
+/**
+ * Gets the file extension for a given MIME type.
+ * @param {string} mimeType MIME type to get the extension for
+ * @returns {string} The file extension for the given MIME type.
+ */
+export function getExtensionByMimeType(mimeType){
+    return mimedb[mimeType]?.extensions?.[0] || mimeType?.split('/')?.pop() || 'bin';
 }

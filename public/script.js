@@ -179,6 +179,7 @@ import {
     localizePagination,
     renderPaginationDropdown,
     paginationDropdownChangeHandler,
+    getExtensionByMimeType,
 } from './scripts/utils.js';
 import { debounce_timeout, IGNORE_SYMBOL } from './scripts/constants.js';
 
@@ -6381,7 +6382,8 @@ async function processImageAttachment(message, { imageUrl }) {
     if (isDataURL(url)) {
         const fileName = `inline_image_${Date.now().toString()}`;
         const [mime, base64] = /^data:(.*?);base64,(.*)$/.exec(imageUrl).slice(1);
-        url = await saveBase64AsFile(base64, message.name, fileName, mime.split('/')[1]);
+        const extension = getExtensionByMimeType(mime);
+        url = await saveBase64AsFile(base64, message.name, fileName, extension);
     }
     saveImageToMessage({ image: url, inline: true }, message);
 }
